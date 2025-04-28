@@ -1,0 +1,40 @@
+import java.io.*;.
+import java.util.*;
+
+public class Main {
+    static Scanner scan = new Scanner(System.in);
+    static StringBuilder sb = new StringBuilder();
+	static int[] a;
+    static int[] selected;
+	static boolean isFlag;
+
+    static void input(){
+		a = new int[9];
+		isFlag = false;
+		for(int i = 0; i < 9; i++)
+			a[i] = scan.nextInt();
+		Arrays.sort(a);
+        selected = new int[7];
+    }
+    
+    static void rec_func(int k, int cnt, int sum){
+		if(isFlag)
+			return;
+
+        if(cnt == 7){
+			if(sum == 100){
+				isFlag = true;
+            		for(int i = 0; i < 7; i++)
+                		sb.append(selected[i]).append("\n");
+            }
+			else
+				return;
+        }
+        else{
+            for(int cand = k; cand < 9; cand++){
+                selected[cnt] = a[cand];
+                rec_func(cand+1, cnt+1, sum+a[cand]);
+                selected[cnt] = 0;
+            }
+        }
+    }
