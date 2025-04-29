@@ -1,0 +1,80 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    static Scanner scan = new Scanner(System.in);
+    static StringBuilder sb = new StringBuilder();
+	static int[] a;
+    static ArrayList<Integer> t;
+	static boolean isFlag;
+
+    static void input(){
+    	int cnt  = scan.nextInt();
+		a = new int[cnt];
+		for(int i = 0; i < cnt; i++)
+			a[i] = scan.nextInt();
+		//System.out.println(a.length);
+        t = new ArrayList<>();
+        t.add(1);
+        int i = 2;
+        int s = 3;
+        while(s <= 1040) {
+        	t.add(s);
+        	i++;
+        	s += i;
+        }
+//        System.out.print("t case : ");
+//        for(Integer b : t) {
+//        	System.out.print(b + " ");
+//        }
+//        System.out.println();
+    }
+    
+    static int find_max(int target) {
+    	int i;
+    	
+//    	while(true) {
+//    		if(t.get(i) > target) break;
+//    		i++;
+//    	}
+    	for(i = 0; t.get(i) < target; i++);
+//    	System.out.println("최소 작은값 + " + i);
+    	return i--;
+    }
+    
+    static void rec_func(int k, int digit, int target){
+		if(isFlag)
+			return;
+
+        if(digit == 3){
+			if(target == 0){
+				isFlag = true;
+            }
+			else
+				return;
+        }
+        else{
+            for(int cand = k; cand >= 0; cand--){
+            	if(t.get(cand) <= target) {
+	                rec_func(cand, digit+1, target-t.get(cand));
+            	}
+            	else {
+            		continue;
+            	}
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        input();
+        for(int i = 0; i < a.length; i++) {
+        	isFlag = false;
+        	rec_func(find_max(a[i]),0,a[i]);
+        	if(isFlag)
+        		sb.append(1).append("\n");
+        	else
+        		sb.append(0).append("\n");
+        }
+        System.out.println(sb.toString());
+    }
+}
