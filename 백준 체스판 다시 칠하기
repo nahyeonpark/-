@@ -1,0 +1,54 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    static Scanner scan = new Scanner(System.in);
+	
+    static boolean a[][];
+    static int min = Integer.MAX_VALUE;
+    
+    static int find_min(int sx, int sy) {
+		boolean np1 = a[sx][sy];
+		boolean np2 = !a[sx][sy];
+		int cnt1 = 0;
+		int cnt2 = 0;
+		
+		for(int i = sx; i < sx + 8; i++){
+			for(int j = sy; j < sy + 8; j++){
+				if(a[i][j] != np1)
+					cnt1++;
+				if(a[i][j] != np2)
+					cnt2++;
+				np1 = !np1;
+				np2 = !np2;
+			} 
+			np1 = !np1;
+			np2 = !np2;
+		}
+		
+		return Math.min(cnt1, cnt2);
+		
+    }
+    
+    public static void main(String[] args) {
+		int n = scan.nextInt();
+		int m = scan.nextInt();
+		a = new boolean[n][m];
+		
+		for(int i = 0; i < n; i++){
+			String s = scan.next();
+			for(int j = 0; j < m; j++){
+				if(s.charAt(j) == 'B') a[i][j] = false;
+				else a[i][j] = true;				
+			}
+		}
+
+        for(int i = 0; i <= n-8; i++) {
+		    for(int j = 0; j <= m-8; j++){
+			    min = Math.min(min, find_min(i,j)); 
+		    }
+        }
+		
+		System.out.println(min);
+    }
+}
