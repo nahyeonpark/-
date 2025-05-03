@@ -1,0 +1,35 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    static Scanner scan = new Scanner(System.in);
+	
+    static int a[][];
+    static int n,m;
+    
+    public static void main(String[] args) {
+		n = scan.nextInt();
+		m = scan.nextInt();
+		a = new int[n][m];
+		int max = 1;
+		
+		for(int i = 0; i < n; i++){
+			String s = scan.next();
+			for(int j = 0; j < m; j++) {
+				a[i][j] = s.charAt(j) - '0';
+			}
+		}
+	
+		int len = Math.min(n, m);
+		for(int k = 1; k < len; k++) {
+			for(int i = 0; i < n-k; i++) {
+				for(int j = 0; j < m-k; j++) {
+					if(a[i][j] == a[i][j+k] && a[i][j] == a[i+k][j] && a[i][j] == a[i+k][j+k])
+					    max = Math.max(max, (k+1)*(k+1));
+				}
+			}
+		}
+       
+		System.out.println(max);
+    }
+}
