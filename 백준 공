@@ -1,0 +1,33 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    static Scanner scan = new Scanner(System.in);
+    static StringBuilder sb = new StringBuilder();
+	
+    static int a[] = new int[]{1,2,3};
+    static int m;
+        
+    public static void main(String[] args) {
+    	
+		m = scan.nextInt();
+		int x, y, temp;
+		for(int i = 0; i < m; i++){
+			x = scan.nextInt();
+			y = scan.nextInt();
+			if(x == y) continue;
+			temp = a[x-1];
+			//System.out.println(temp);
+			a[x-1] = a[y-1];
+			//System.out.println(a[x-1]);
+			a[y-1] = temp;
+			//System.out.println(Arrays.toString(a));
+		}
+		
+		for(int i = 0; i < 3; i++) {
+			if(a[i] == 1)
+				System.out.println(i+1);
+		}
+		
+    }
+}
