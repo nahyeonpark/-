@@ -1,0 +1,70 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    static Scanner scan = new Scanner(System.in);
+    static StringBuilder sb = new StringBuilder();
+	
+    static int a[] = new int[14];
+    static int cash_j, cash_s, stock_j, stock_s;
+    
+    static void bnp() {
+    	for(int i = 0; i < 14; i++) {
+    		if(cash_j >= a[i]) {
+    			stock_j += cash_j / a[i];
+    			cash_j = cash_j % a[i];
+    		}
+    	}
+    }
+    
+    static void timing() {
+    	int down_cnt = 0;
+    	int up_cnt = 0;
+    	
+    	for(int i = 1; i < 14; i++) {
+    		if(a[i] == a[i-1]) {
+    			down_cnt = 0;
+    			up_cnt = 0;
+    		}
+    		
+    		if(a[i] > a[i-1]) { //내가 클 때, 다음 수가 큼
+    			down_cnt = 0;
+    			up_cnt++;
+    			if(up_cnt == 3) {
+    				cash_s += a[i] * stock_s;
+    				stock_s = 0;
+    			}
+    		}
+    		if(a[i] < a[i-1]) { //내가 작을 때, 다음 수가 작음
+    			up_cnt = 0;
+    			down_cnt++;
+    			if(down_cnt >= 3 && cash_s >= a[i]) {
+    				stock_s += cash_s / a[i];
+    				cash_s = cash_s % a[i];
+    			}
+    		}
+    	}
+    }
+        
+    public static void main(String[] args) {
+		cash_j = cash_s =  scan.nextInt();
+		stock_j = stock_s = 0;
+		
+		for(int i = 0; i < 14; i++){
+			a[i] = scan.nextInt();
+		}
+		
+		bnp();
+		timing();
+		
+		int total_j = cash_j + (a[13] * stock_j);
+		int total_s = cash_s + (a[13] * stock_s);
+		
+		if(total_j > total_s)//준현이가 큼
+			System.out.println("BNP");
+		else if(total_j < total_s) //성민이가 큼
+			System.out.println("TIMING");
+		else // 같음
+			System.out.println("SAMESAME");
+    }
+}
