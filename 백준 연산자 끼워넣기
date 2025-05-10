@@ -1,0 +1,57 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    static Scanner scan = new Scanner(System.in);
+    static StringBuilder sb = new StringBuilder();
+	
+    static int a[];
+    static int op[];
+    static int n, max = Integer.MIN_VALUE, min= Integer.MAX_VALUE;
+    
+    static int operator(int i, int k, int sum) {
+    	if(i == 0)
+    		return sum+a[k];
+    	else if(i == 1)
+    		return sum-a[k];
+    	else if(i == 2)
+    		return sum*a[k];
+    	else
+    		return sum/a[k];
+    }
+    
+    static void rec_func(int k, int sum) {
+    	if(k == n-1) {
+    		max = Math.max(max, sum);
+    		min = Math.min(min, sum);
+    		return;
+    	}
+    	
+    	for(int cand = 0; cand < 4; cand++) {
+    		if(op[cand] > 0) {
+    			op[cand]--;
+    			rec_func(k+1, operator(cand,k+1,sum));
+    			op[cand]++;
+    		}
+    	}
+    }
+        
+    public static void main(String[] args) {
+    	n = scan.nextInt();
+    	a = new int[n];
+    	op = new int[4];
+    	
+		for(int i = 0; i < n; i++) {
+			a[i] = scan.nextInt();
+		}
+		
+		for(int i = 0; i < 4; i++) {
+			op[i] = scan.nextInt();
+		}
+		
+		rec_func(0,a[0]);
+		
+		System.out.println(max);
+		System.out.println(min);
+    }
+}
