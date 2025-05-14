@@ -1,0 +1,61 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    static Scanner scan = new Scanner(System.in);
+    static StringBuilder sb = new StringBuilder();
+	
+    static boolean visited[][];
+    static int[][] a, dir = {{0,-1}, {0,1}, {-1,0}, {1,0}};
+    static int n, m;
+    
+    static void dfs(int y, int x) {
+    	if(a[y][x] == 0) return;
+    	visited[y][x] = true;
+    	
+    	for(int i = 0; i < 4; i++) {
+    		int nx = x + dir[i][0];
+    		int ny = y + dir[i][1];
+    		
+    		if(nx < 0 || nx >= m) continue;
+    		if(ny < 0 || ny >= n) continue;
+    		if(visited[ny][nx]) continue;
+    		
+    		dfs(ny,nx);
+    		
+    	}
+    }
+     
+    public static void main(String[] args) {
+    	int t = scan.nextInt();
+    	
+    	while(t > 0) {
+    		m = scan.nextInt();
+        	n = scan.nextInt();
+        	int k = scan.nextInt();
+        	int cnt = 0;
+        	
+    		a = new int[n][m];
+        	visited = new boolean[n][m];
+        	
+    		for(int i = 0; i < k; i++) {
+    			int x = scan.nextInt();
+    			int y = scan.nextInt();
+    			a[y][x] = 1;
+    		}
+    		
+    		for(int i = 0; i < n; i++) {
+    			for(int j = 0; j < m; j++) {
+	    			if(a[i][j] == 0 || visited[i][j]) continue;
+	    			dfs(i,j);
+	    			cnt++;
+    			}
+    		}
+    		
+    		sb.append(cnt).append("\n");
+    		t--;
+    	}
+    	System.out.println(sb.toString());
+    	
+    }
+}
