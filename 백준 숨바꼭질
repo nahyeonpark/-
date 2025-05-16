@@ -1,0 +1,54 @@
+import java.io.*;
+import java.util.*;
+
+public class Main {
+    static Scanner scan = new Scanner(System.in);
+    static StringBuilder sb = new StringBuilder();
+	
+    static int[] dist;
+    static int n, k;
+
+    static void bfs(int start) {
+		Queue<Integer> que = new LinkedList<>();
+		que.add(start);
+		dist[start] = 0;
+    	
+		while(!que.isEmpty()){
+    		int x = que.poll();
+			
+			if(x == k) break;
+
+    		if(x-1 >= 0 && dist[x-1] == -1){
+				que.add(x-1);
+				dist[x-1] = dist[x]+1;
+			}
+
+			if(x+1 <= 100000 && dist[x+1] == -1){
+				que.add(x+1);
+				dist[x+1] = dist[x]+1;
+			}
+			
+			if((2*x) <= 100000 && dist[(2*x)] == -1){
+				que.add(2*x);
+				dist[(2*x)] = dist[x]+1;
+			}
+    		
+    	}
+    }
+     
+    public static void main(String[] args) {
+    	n = scan.nextInt();
+		k = scan.nextInt();
+    	
+    	dist = new int[100001];
+	
+		for(int i = 0; i <= 100000; i++) {
+    		dist[i] = -1;
+		}
+    
+		bfs(n);
+
+    	System.out.println(dist[k]);
+    	
+    }
+}
