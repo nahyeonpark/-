@@ -1,0 +1,37 @@
+import java.util.*;;
+
+public class Main{
+    static int[] dp;
+    static int[][] a;
+    static int n;
+    
+    static void max_bene(){
+        int max = 0;
+        int next;
+        for(int i = 1; i <= n+1; i++){
+            if(max < dp[i]) max = dp[i];
+            next = i + a[i][0];
+            
+            if(next <= n+1){
+                dp[next] = Math.max(dp[next], max + a[i][1]);
+            }
+        }
+        
+    }
+    public static void main(String[] args){
+        Scanner scan = new Scanner(System.in);
+        
+        n = scan.nextInt();
+        dp = new int[n+2];
+        a = new int[n+2][2];
+        
+        for(int i = 1; i <= n; i++){
+            a[i][0] = scan.nextInt();
+            a[i][1] = scan.nextInt();
+        }
+        
+        max_bene();
+        
+        System.out.println(dp[n+1]);
+    }
+}
