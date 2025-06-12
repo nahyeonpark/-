@@ -1,0 +1,48 @@
+import java.util.*;
+
+public class Main {
+    static int k;
+    static int[] a, selected;
+    static StringBuilder sb = new StringBuilder();
+   
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        
+        while(true) {
+        	 k = scan.nextInt();
+        	 
+        	 if(k == 0) break;
+             
+             a = new int[k+1];
+             
+             for(int i = 1; i <= k; i++)
+             	a[i] = scan.nextInt();
+             
+             selected = new int[7];
+             
+             rec_func(1, 1);
+             sb.append("\n");
+        }
+         
+        System.out.println(sb.toString());
+    }
+    
+    static void rec_func(int x, int cand) {
+    	if(x == 7) {
+    		for(int i = 1; i <= 6; i++)
+    			sb.append(selected[i]).append(" ");
+    		sb.append("\n");
+    		return;
+    	}
+    		
+    	for(int i = cand; i <= k; i++) {
+    		selected[x] = a[i];
+    		rec_func(x+1, i+1);
+    		selected[x] = 0;
+
+    	}
+    		
+    }
+    
+}
+
