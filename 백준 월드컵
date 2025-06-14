@@ -1,0 +1,78 @@
+import java.util.*;
+
+public class Main {
+    static int[][] results = new int[6][3]; // [팀][0:승, 1:무, 2:패]
+    static int[][] games = new int[15][2];  // 총 15경기: 두 팀의 조합
+    static boolean possible;               // 가능한 경기 결과인지 여부
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        // 경기 조합 초기화 (고정)
+        int idx = 0;
+        for (int i = 0; i < 5; i++) {
+            for (int j = i + 1; j < 6; j++) {
+                games[idx][0] = i;
+                games[idx][1] = j;
+                idx++;
+            }
+        }
+
+        for (int t = 0; t < 4; t++) { // 총 4개의 테스트 케이스
+            int sum = 0;
+            for (int i = 0; i < 6; i++) {
+                for (int j = 0; j < 3; j++) {
+                    results[i][j] = sc.nextInt();
+                    sum += results[i][j];
+                }
+            }
+
+            // 경기 수가 15경기 * 2 = 30이어야 탐색 진
+            if (sum != 30) {
+                System.out.print("0 ");
+                continue;
+            }
+
+            possible = false;
+            dfs(0);
+            System.out.print(possible ? "1 " : "0 ");
+        }
+    }
+
+    static void dfs(int game) {
+        if (game == 15) {
+            possible = true;
+            return;
+        }
+
+        int a = games[game][0];
+        int b = games[game][1];
+
+        // A가 이기고 B가 지는 경우
+        if (results[a][0] > 0 && results[b][2] > 0) {
+            results[a][0]--;
+            results[b][2]--;
+            dfs(game + 1);
+            results[a][0]++;
+            results[b][2]++;
+        }
+
+        // 무승부
+        if (results[a][1] > 0 && results[b][1] > 0) {
+            results[a][1]--;
+            results[b][1]--;
+            dfs(game + 1);
+            results[a][1]++;
+            results[b][1]++;
+        }
+
+        // A가 지고 B가 이기는 경우
+        if (results[a][2] > 0 && results[b][0] > 0) {
+            results[a][2]--;
+            results[b][0]--;
+            dfs(game + 1);
+            results[a][2]++;
+            results[b][0]++;
+        }
+    }
+}
