@@ -1,0 +1,28 @@
+import java.util.*;
+import java.lang.Math;
+
+public class Main {
+    static int max = 0;
+    static StringBuilder sb = new StringBuilder();
+
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        
+        int n = scan.nextInt();
+        int m = scan.nextInt();
+        int k = scan.nextInt();
+        
+        for(int i = 0; i <= k; i++) {
+        	if(n-i <= 0 || m-(k-i) <= 0)
+        		continue;
+        	int a = n-i;
+        	int b = m-(k-i);
+        	int t = a/2;
+        	max = Math.max(max,b >= t ? t : b);
+        	//System.out.println(a + " " + b + " " + t + " " + max);
+        }
+        
+        System.out.println(max);
+    }
+
+}
