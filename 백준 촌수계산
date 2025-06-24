@@ -1,0 +1,50 @@
+import java.util.*;
+
+public class Main {
+    static int a, b;
+    static ArrayList<Integer>[] c;
+    static int[] visited;
+
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        int n = scan.nextInt();
+        a = scan.nextInt();
+        b = scan.nextInt();
+        int m = scan.nextInt();
+
+        c = new ArrayList[n + 1];
+        visited = new int[n + 1];
+
+        for (int i = 1; i <= n; i++) {
+            c[i] = new ArrayList<>();
+            visited[i] = -1;
+        }
+
+        for (int i = 0; i < m; i++) {
+            int x = scan.nextInt();
+            int y = scan.nextInt();
+            c[x].add(y);
+            c[y].add(x);
+        }
+
+        bfs(a);
+    }
+
+    static void bfs(int start) {
+        Queue<Integer> que = new LinkedList<>();
+        que.add(start);
+        visited[start] = 0;
+
+        while (!que.isEmpty()) {
+            int x = que.poll();
+
+            for (int y : c[x]) {
+                if (visited[y] != -1) continue;
+                visited[y] = visited[x] + 1;
+                que.add(y);
+            }
+        }
+
+        System.out.println(visited[b]);
+    }
+}
