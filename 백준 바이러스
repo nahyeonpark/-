@@ -1,0 +1,42 @@
+import java.util.*;
+
+public class Main {
+    static int sum;
+    static ArrayList<Integer>[] a;
+    static boolean[] visited;
+
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        int n = scan.nextInt();
+        int m = scan.nextInt();
+        
+        a = new ArrayList[n+1];
+        visited = new boolean[n+1];
+        
+    	for(int i = 1; i <= n; i++)
+    		a[i] = new ArrayList<>();
+        
+        for(int i = 1; i <= m; i++) {
+        	int x = scan.nextInt();
+        	int y = scan.nextInt();
+        	a[x].add(y);
+        	a[y].add(x);
+        }
+        
+        sum = 0;
+        dfs(1);
+        sum--;
+        
+        System.out.println(sum);
+    }
+    
+    static void dfs(int x) {
+    	visited[x] = true;
+    	sum++;
+    	
+    	for(int y : a[x]) {
+    		if(visited[y]) continue;
+    		dfs(y);
+    	}
+    }
+}
