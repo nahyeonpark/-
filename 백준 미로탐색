@@ -1,0 +1,58 @@
+import java.util.*;
+
+public class Main {
+	static int n,m;
+    static int[][] a, dist;
+    static int[][] dir = {{-1,0}, {1,0} , {0,-1}, {0,1}};
+
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        n = scan.nextInt();
+        m = scan.nextInt();
+        
+        a = new int[n+1][m+1];
+        dist = new int[n+1][m+1];
+        
+        for(int i = 1; i <= n; i++) {
+        	String s = scan.next();
+        	for(int j = 0; j < m; j++)
+        		a[i][j+1] = s.charAt(j) - '0';
+        }
+        
+        //System.out.println(Arrays.deepToString(a));
+        
+        bfs(1,1);
+        
+        
+        System.out.println(dist[n][m]);
+        	
+        
+    }
+    
+    static void bfs(int sx, int sy) {
+    	Queue<Integer> que = new LinkedList<>();
+    	que.add(sx);
+    	que.add(sy);
+    	dist[sx][sy] = 1;
+    	
+    	while(!que.isEmpty()) {
+    		int x = que.poll();
+    		int y = que.poll();
+    		
+    		for(int i = 0; i < 4; i++) {
+    			int nx = x + dir[i][0];
+    			int ny = y + dir[i][1];
+    			if(nx < 1 || nx > n || ny < 1 || ny > m) continue;
+    			if(a[nx][ny] == 0) continue;
+    			if(dist[nx][ny] != 0) continue;
+    			dist[nx][ny] = dist[x][y] + 1;
+    			que.add(nx);
+    			que.add(ny);
+    		}
+    	}
+    	//System.out.println(Arrays.deepToString(dist));
+    			
+    	
+    }
+
+}
