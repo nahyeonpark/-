@@ -1,0 +1,47 @@
+import java.util.*;
+
+public class Main {
+	static int f,s,g,u,d;
+    static int[] dist;
+
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        f = scan.nextInt();
+        s = scan.nextInt();
+        g = scan.nextInt();
+        u = scan.nextInt();
+        d = scan.nextInt();
+
+        dist = new int[f+1];
+        Arrays.fill(dist, -1);
+        
+        bfs(s);
+        
+        System.out.println(dist[g] == -1 ? "use the stairs" : dist[g]);
+        	      
+    }
+
+    static void bfs(int sx) {
+    	Queue<Integer> que = new LinkedList<>();
+    	que.add(sx);
+    	dist[sx] = 0;
+    	
+    	while(!que.isEmpty()) {
+    		int x = que.poll();
+    		
+    		if(x == g)
+    			break;
+    		
+    		if(x+u <= f && dist[x+u] == -1) {
+    			que.add(x+u);
+    			dist[x+u] = dist[x]+1;
+    		}
+    		
+    		if(x-d > 0 && dist[x-d] == -1) {
+    			que.add(x-d);
+    			dist[x-d] = dist[x]+1;
+			}
+    	} 	
+    }
+
+}
