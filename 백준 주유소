@@ -1,0 +1,28 @@
+import java.util.*;
+
+public class Main {
+
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        int n = scan.nextInt();
+        long[] dist = new long[n-1];
+        long[] gas = new long[n];
+        
+        for(int i = 0; i < n-1; i++)
+        	dist[i] = scan.nextLong();
+        for(int i = 0; i < n; i++)
+        	gas[i] = scan.nextLong();
+        
+        long min = gas[0];
+        long sum = gas[0] * dist[0];
+        
+        for(int i = 1; i < n-1; i++) {
+        	min = Math.min(min, gas[i]);
+        	sum += min * dist[i];
+        }
+        System.out.println(sum);
+        	
+        
+    }
+    
+}
