@@ -1,0 +1,27 @@
+package baekjon;
+import java.util.*;
+
+public class Main {
+	static int n;
+
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        n = scan.nextInt();
+        
+        int cnt = 0;
+        
+        while(n > 0) {
+        	if(n % 5 == 0) {
+        		cnt += n / 5;
+        		n = 0;
+        	}
+        	else {
+        		n -= 3;
+        		cnt++;
+        	}
+        }
+        
+        System.out.println(n < 0 ? -1 : cnt);
+        
+    }
+}
