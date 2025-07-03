@@ -1,0 +1,36 @@
+import java.util.*;
+
+public class Main {
+	static int n;
+	static int[] dist;
+
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        n = scan.nextInt();
+        dist = new int[n+1];
+        Arrays.fill(dist, -1);
+        bfs(n);
+        
+        System.out.println(dist[0]);
+        
+    }
+    static void bfs(int sx) {
+    	Queue<Integer> que = new LinkedList<>();
+    	que.add(sx);
+    	dist[sx] = 0;
+    	
+    	while(!que.isEmpty()) {
+    		int x = que.poll();
+    		
+    		if(x >= 3 && dist[x-3] == -1) {
+    			que.add(x-3);
+    			dist[x-3] = dist[x]+1;
+    		}
+    		if(x >= 5 && dist[x-5] == -1) {
+    			que.add(x-5);
+    			dist[x-5] = dist[x]+1;
+    		}
+    	}
+    }
+    
+}
