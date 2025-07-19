@@ -1,0 +1,86 @@
+import java.util.*;
+
+public class Main {
+	static int n;
+	static int[][] a;
+	static int[][] dir = {{0,1}, {1,0}};
+	static int max;
+
+    public static void main(String[] args) {
+        Scanner scan = new Scanner(System.in);
+        
+        n = scan.nextInt();
+        a = new int[n][n];
+        
+        for(int i = 0 ; i < n; i++) {
+        	String s = scan.next();
+        	for(int j = 0; j < n; j++) {
+        		if(s.charAt(j) == 'C')
+        			a[i][j] = 1;
+        		if(s.charAt(j) == 'P')
+        			a[i][j] = 2;
+        		if(s.charAt(j) == 'Z')
+        			a[i][j] = 3;
+        		if(s.charAt(j) == 'Y')
+        			a[i][j] = 4;
+        	}
+        }
+        
+        max = -1;
+        for(int i = 0; i < n; i++) {
+        	for(int j = 0; j < n; j++) {
+        		for(int k = 0; k < 2; k++) {
+        			int x = i + dir[k][0];
+        			int y = j + dir[k][1];
+        			if(x < 0 || x >= n || y < 0 || y >= n) continue;
+        			if(a[i][j] == a[x][y]) continue;
+        			findMax(i,j,x,y);
+        		}
+        	}
+        }
+        System.out.println(max);
+    }
+    
+    static void findMax(int x, int y, int nx, int ny) {
+    	int temp = a[x][y];
+    	a[x][y] = a[nx][ny];
+    	a[nx][ny]  = temp;
+    	
+    	for(int i = 0; i < n; i++) {
+    		int rowNum = 0;
+    		int rowMax = 0;
+    		for(int j = 0; j < n; j++) {
+    			if(rowNum == a[i][j]) {
+    				rowMax++;	
+    			}
+    			else {
+    				rowNum = a[i][j];
+    				max = Math.max(rowMax, max);
+    				rowMax = 1;
+    			}	
+    		}
+            max = Math.max(rowMax, max);
+    	}
+    	
+    	for(int j = 0; j < n; j++) {
+    		int colNum = 0;
+    		int colMax = 0;
+    		for(int i = 0; i < n; i++) {
+    			if(colNum == a[i][j]) {
+    				colMax++;
+    			}
+    			else {
+    				colNum = a[i][j];
+    				max = Math.max(colMax, max);
+    				colMax = 1;
+    			}	
+    		}
+            max = Math.max(colMax, max);
+    	}
+    	
+    	temp = a[x][y];
+    	a[x][y] = a[nx][ny];
+    	a[nx][ny]  = temp;
+    }
+    
+}
